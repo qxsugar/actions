@@ -17,7 +17,7 @@ jobs:
         uses: stvenx/wechat-work-messenger@v2
         if: success()
         env:
-          BOT_KEY: {{ inputs.bot_key }}
+          BOT_KEY: ${{ inputs.bot_key }}
           MSG_TYPE: markdown
           POST_MESSAGE: |
             <font color=\"info\">${{ github.GITHUB_REPOSITORY }}:${{ github.ref_name }} 部署成功 </font> \n
@@ -26,11 +26,11 @@ jobs:
             提交记录：
             ${{ github.COMMIT_MSG }}\n
 
-      - name: notify(failure
+      - name: notify(failure)
         uses: stvenx/wechat-work-messenger@v2
         if: failure()
         env:
-          BOT_KEY: {{ inputs.bot_key }}
+          BOT_KEY: ${{ inputs.bot_key }}
           MSG_TYPE: markdown
           POST_MESSAGE: |
             ❗️❗️❗️ <font color=\"warning\">${{ github.GITHUB_REPOSITORY }}:${{ github.ref_name }} 部署失败 </font> \n
