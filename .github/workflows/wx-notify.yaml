@@ -5,7 +5,7 @@ on:
     inputs:
       bot_key:
         description: 'wechat bot key'
-        required: true
+        required: false
         default: 'c10e1711-aec4-476f-9d8a-badfb4b2d3df'
 
 jobs:
