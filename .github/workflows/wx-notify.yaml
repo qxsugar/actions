@@ -10,7 +10,7 @@ on:
         default: 'c10e1711-aec4-476f-9d8a-badfb4b2d3df'
 
 jobs:
-  build:
+  notify:
     runs-on: self-hosted
     steps:
       - name: notify(success)
