@@ -1,13 +1,12 @@
-name: actions-wx-notify
+name: actions-wechat-notify
 
 on:
   workflow_call:
     inputs:
       bot_key:
         description: 'wechat bot key'
-        required: false
+        required: true
         type: string
-        default: 'c10e1711-aec4-476f-9d8a-badfb4b2d3df'
 
 jobs:
   notify:

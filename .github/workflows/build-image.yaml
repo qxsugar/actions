@@ -1,4 +1,4 @@
-name: actions-go-build
+name: actions-build-image
 
 on:
   workflow_call:
