@@ -8,10 +8,10 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Cache Go Modules
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: |
             ~/go/pkg/mod
@@ -21,15 +21,32 @@ jobs:
             ${{ runner.os }}-go-
 
       - name: Set up Go
-        uses: actions/setup-go@v2
+        uses: actions/setup-go@v5
         with:
-          go-version: 1.22
+          go-version: '1.22'
+          cache: true
 
-      - name: Go Test
-        run: |
-          go mod tidy
-          go test ./...
+      - name: Download dependencies
+        run: go mod download
+
+      - name: Run tests
+        run: go test -v -race -coverprofile=coverage.out ./...
+
+      - name: Upload coverage reports
+        uses: codecov/codecov-action@v4
+        if: success()
+        with:
+          file: coverage.out
+          flags: unittests
+          name: codecov-umbrella
 
       - name: Build App
         run: |
-          CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o app
+          CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o app
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-binary
+          path: app
+          retention-days: 30
